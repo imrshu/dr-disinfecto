@@ -11,4 +11,5 @@ urlpatterns = [
     path('home', home, name = 'home'),
     path('product/<product_id>/', productorder, name='productorder'),
     path('feedback', feedback, name='feedback'),
+    path('success/', success, name='success')
 ]

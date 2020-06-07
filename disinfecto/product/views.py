@@ -1,8 +1,12 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from .forms import *
 from .models import *
 from django.contrib.auth import login, authenticate
 from django.core.mail import send_mail
+import requests
+import hmac
+import hashlib
 
 
 def signup(request):
@@ -33,12 +37,27 @@ def productorder(request, product_id):
         products = Product.objects.get(id=int(product_id))
         return render(request, 'order.html', {'products':products})
     else:
-        products = Product.objects.get(id=int(product_id))
+        products = Product.objects.get(id=product_id)
         quantity = request.POST.get('quantity')
         total = int(products.price) * int(quantity)
-        Order.objects.create(user=request.user, product=products,
-        quantity=quantity, total=total)
-        return redirect('home')
+        print(total)
+        response = requests.post('https://api.razorpay.com/v1/orders',
+        json={
+        'amount': total*100,
+        'currency': 'INR',
+        'payment_capture':1
+        },
+        headers={'content-type':'application/json',
+        'Authorization': 'Basic cnpwX3Rlc3RfWk13MklkM3JsZExrbTA6UjdQaFRYaVdqb0o1WW9lc0FJNGRpUlJR'
+        }).json()
+        amount = response.get('amount')
+        print(amount)
+        order_id = response.get('id')
+        return render(request, 'razorpay_form.html', {
+            'amount': amount,
+            'order_id': order_id,
+            'name': products.name
+        })
 
 def feedback(request):
     if request.method == 'GET':
@@ -49,3 +68,28 @@ def feedback(request):
         send_mail('disinfecto', message, email, ['rishabh.verma11998@gmail.com'])
         print("suexsuces")
         return redirect('home')
+
+
+def success(request):
+    if request.method == 'POST':
+        if 'error' in request.POST:
+            return HttpResponse('payment not completed')
+        else:
+            # got the response postback data
+            razorpay_order_id = request.POST.get('razorpay_order_id')
+            razorpay_payment_id = request.POST.get('razorpay_payment_id')
+            razorpay_signature = request.POST.get('razorpay_signature')
+            # payment string
+            payment_string = razorpay_order_id + '|' + razorpay_payment_id
+            # generate the hashed string
+            signature = hmac.new(bytes('R7PhTXiWjoJ5YoesAI4diRRQ', 'latin-1'),
+            msg=bytes(payment_string, 'latin-1'),
+            digestmod=hashlib.sha256
+            ).hexdigest().upper()
+            # verify the payment integrity
+            if signature == razorpay_signature:
+                return HttpResponse('payment done')
+            else:
+                return HttpResponse('payment failed')
+
+
