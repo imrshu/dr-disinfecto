@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+
+{% block body %}
+<div class="tabs">
+  <ul>
+    <li class="is-active"><a href="{% url 'product:index' %}">HOME</a></li>
+    <li><a href="{% url 'product:login' %}">Login</a></li>
+    <li><a  href="{% url 'product:signup' %}">Signup </a></li>
+    <li><a  href="#aboutus">About Us</a></li>
+  </ul>
+</div>
+
+<div class="columns">
+<section class="hero">
+  <div class="column is-12">
+  <div class="hero-body">
+    <div class="container">
+      <figure class="image">
+        <img src="{% static 'images/car.PNG' %}">
+      </figure>
+    </div>
+  </div>
+  </div>
+  <div class="column is-12">
+  <div class="hero-body">
+    <div class="container">
+      <figure class="image">
+        <img src="{% static 'images/Capture1.PNG' %}">
+      </figure>
+    </div>
+  </div>
+  </div>
+</section>
+</div>
+
+<section class="hero is-black" id='aboutus'>
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+        ABOUT US
+      </h1>
+    </div>
+  </div>
+</section>
+
+<br>
+<div class="tile is-ancestor has-background-black">
+  <div class="tile is-vertical is-8 has-background-black">
+    <div class="tile">
+      <div class="tile is-parent is-vertical">
+        <article class="tile is-child notification is-black">
+          <p class="title">SANITIZING SERVICES</p>
+          <p class="subtitle">Residental</p>
+          <p class="subtitle">Work Places</p>
+          <p class="subtitle">Private Vehicles</p>
+          <p class="subtitle">Commercial Vehicles</p>
+        </article>
+      </div>
+
+    </div>
+    <div class="tile is-parent">
+      <article class="tile is-child notification is-black">
+        <p class="title">HEALTH CARE PRODUCTS</p>
+        <p class="subtitle">Sanitizers</p>
+        <p class="subtitle">Face Masks</p>
+        <p class="subtitle">PPE Kits</p>
+        <p class="subtitle">Disinfectant Chemicals</p>
+        <p class="subtitle">Infrared Thermometers</p>
+        <div class="content">
+          <!-- Content -->
+        </div>
+      </article>
+    </div>
+  </div>
+  <div class="tile is-parent">
+    <article class="tile is-child notification is-black">
+      <div class="content">
+        <p class="title">KEY BENEFITS</p>
+        <p class="subtitle">Dedicated Services</p>
+        <p class="subtitle">Best Quality Products</p>
+        <p class="subtitle">Never Ending Discounts</p>
+        <p class="subtitle">Promo Offers</p>
+        <div class="content">
+          <!-- Content -->
+        </div>
+      </div>
+    </article>
+  </div>
+</div>
+
+
+<footer class="footer">
+  <div class="content has-text-centered">
+    <p>
+      <strong>Dr Disinfecto</strong> <br> Visit our WebPage for more information on:
+      <br>
+      <a href="fb.com/dr.disinfecto">FACEBOOK</a>
+      <br>
+      <a href="/dr.disinfecto">INSTAGRAM</a>
+    </p>
+
+    <p>
+      <strong>Dr Disinfecto</strong><br> For more details please contact us:
+      <a href="fb.com/dr.disinfecto">+91 9818427577</a>
+    </p>
+
+  </div>
+</footer>
+
+
+
+
+{% endblock %}

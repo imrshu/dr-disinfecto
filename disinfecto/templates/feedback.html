@@ -1,11 +1,42 @@
 {% extends 'base.html' %}
 
 {% block body %}
+<section class="hero">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-half">
+          <form method="post">
+            {% csrf_token %}
 
-<form method="POST">
-  {% csrf_token %}
-  <input type="email" name="email" placeholder="Enter the email" value="{{request.user.email}}">
-  <textarea name="msg" rows="8" cols="80"></textarea>
-  <button type="submit" class="button">Send</button>
-</form>
+            <div class="field">
+              <label class="label">Email</label>
+              <div class="control">
+                <input type="email" class="input" name="email" placeholder="Enter the email" value="{{request.user.email}}">
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label">Your Issues</label>
+              <div class="control">
+                <textarea class="textarea" name="msg" placeholder="Write the short description about your Query"></textarea>
+              </div>
+            </div>
+
+            <div class="field is-grouped">
+              <p class="control">
+                <button type="submit" class="button is-black">
+                  FEEDBACK SEND
+                </button>
+              </p>
+            </div>
+          </form>
+
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</section>
 {% endblock %}

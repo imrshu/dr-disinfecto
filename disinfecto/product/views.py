@@ -39,26 +39,30 @@ def productorder(request, product_id):
     else:
         products = Product.objects.get(id=product_id)
         quantity = request.POST.get('quantity')
-        total = int(products.price) * int(quantity)
-        response = requests.post('https://api.razorpay.com/v1/orders',
-        json={
-        'amount': total*100,
-        'currency': 'INR',
-        'payment_capture':1
-        },
-        headers={'content-type':'application/json',
-        'Authorization': 'Basic cnpwX3Rlc3RfWk13MklkM3JsZExrbTA6UjdQaFRYaVdqb0o1WW9lc0FJNGRpUlJR'
-        }).json()
-        amount = response.get('amount')
-        order_id = response.get('id')
-        return render(request, 'razorpay_form.html', {
-            'amount': amount,
-            'order_id': order_id,
-            'name': products.name,
-            'product_id': products.id,
-            'total': total,
-            'quantity': quantity
-        })
+        if int(quantity) <= int(products.qty):
+
+            total = int(products.price) * int(quantity)
+            response = requests.post('https://api.razorpay.com/v1/orders',
+            json={
+            'amount': total*100,
+            'currency': 'INR',
+            'payment_capture':1
+            },
+            headers={'content-type':'application/json',
+            'Authorization': 'Basic cnpwX3Rlc3RfWk13MklkM3JsZExrbTA6UjdQaFRYaVdqb0o1WW9lc0FJNGRpUlJR'
+            }).json()
+            amount = response.get('amount')
+            order_id = response.get('id')
+            return render(request, 'razorpay_form.html', {
+                'amount': amount,
+                'order_id': order_id,
+                'name': products.name,
+                'product_id': products.id,
+                'total': total,
+                'quantity': quantity
+            })
+        else:
+            return render(request, 'order.html', {'error':"Quantity is Not Available"})
 
 def feedback(request):
     if request.method == 'GET':
@@ -98,8 +102,11 @@ def success(request):
                     razorpay_order_id=razorpay_order_id,
                     order_success=True
                 )
-                return HttpResponse('payment done Order placed successfully')
+                product.qty = int(product.qty) - int(request.POST.get('quantity'))
+                return HttpResponse('Payment done Order placed successfully')
             else:
                 return HttpResponse('payment failed')
 
-
+def index(request):
+    if request.method == 'GET':
+        return render(request, 'home.html')

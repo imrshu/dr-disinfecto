@@ -4,17 +4,46 @@
 
 
 {% block body %}
-
-<div class="columns">
-  <div class="column">
-    <form method="post">
-      {% csrf_token %}
-      {{form.as_p}}
-      <button class="button is-success" > SIGNUP </button>
-    </form>
-
+<section class="hero is-bold is-dark">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+        DR. DISINFECTO
+      </h1>
+      <h2 class="subtitle">
+        Welcome To Dr Disinfecto
+      </h2>
+    </div>
   </div>
-</div>
+</section>
+<section class="hero">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-half">
+          <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="field">
+              <label class="label">{{field.label}}</label>
+              <div class="control">
+                <input class="input" type="text" placeholder="Text input">
+              </div>
+            </div>
+            {% endfor %}
+            <div class="field is-grouped">
+              <p class="control">
+                <a class="button is-black">
+                  SIGNUP
+                </a>
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 
 {% endblock %}

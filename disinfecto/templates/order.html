@@ -4,10 +4,35 @@
 
 
 {% block body %}
-<form method="POST">
-  {% csrf_token %}
-  <input class="input" name="quantity">
-  <button type="submit"> SUBMIT </button>
-</form>
-
+<section class="hero">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-half">
+          <form method="post">
+            {% csrf_token %}
+            <div class="field">
+              <label class="label">Quantity</label>
+              <div class="control">
+                <input class="input" type="text" placeholder="Enter Quantity " name="quantity">
+              </div>
+              {% if error %}
+              <p class="help is-success"> {{error}} </p>
+              {% else %}
+              <p class="help is-success"> Quantity is Available {{products.qty}} </p>
+              {% endif %}
+            </div>
+            <div class="field is-grouped">
+              <p class="control">
+                <button type="submit" class="button is-black">
+                  Order Confirm
+                </button>
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 {% endblock %}
