@@ -49,6 +49,8 @@ class Order(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
     total = models.CharField(max_length=20, null=True, blank=True)
+    razorpay_order_id = models.CharField(max_length=60, null=True, blank=True)
+    order_success = models.BooleanField(default=False)
     date = models.DateTimeField(auto_now_add=True)
 
 

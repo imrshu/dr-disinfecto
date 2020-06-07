@@ -40,7 +40,6 @@ def productorder(request, product_id):
         products = Product.objects.get(id=product_id)
         quantity = request.POST.get('quantity')
         total = int(products.price) * int(quantity)
-        print(total)
         response = requests.post('https://api.razorpay.com/v1/orders',
         json={
         'amount': total*100,
@@ -51,12 +50,14 @@ def productorder(request, product_id):
         'Authorization': 'Basic cnpwX3Rlc3RfWk13MklkM3JsZExrbTA6UjdQaFRYaVdqb0o1WW9lc0FJNGRpUlJR'
         }).json()
         amount = response.get('amount')
-        print(amount)
         order_id = response.get('id')
         return render(request, 'razorpay_form.html', {
             'amount': amount,
             'order_id': order_id,
-            'name': products.name
+            'name': products.name,
+            'product_id': products.id
+            'total': total,
+            'quantity': quantity
         })
 
 def feedback(request):
@@ -88,7 +89,16 @@ def success(request):
             ).hexdigest().upper()
             # verify the payment integrity
             if signature == razorpay_signature:
-                return HttpResponse('payment done')
+                product = Product.objects.get(id=int(request.POST.get('product')))
+                Order.objects.create(
+                    user=request.user,
+                    product=product,
+                    quantity=request.POST.get('quantity')
+                    total=request.POST.get('total')
+                    razorpay_order_id=razorpay_order_id,
+                    order_success=True
+                )
+                return HttpResponse('payment done Order placed successfully')
             else:
                 return HttpResponse('payment failed')
 
