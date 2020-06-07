@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<form method="POST">
+  {% csrf_token %}
+  <input type="email" name="email" placeholder="Enter the email" value="{{request.user.email}}">
+  <textarea name="msg" rows="8" cols="80"></textarea>
+  <button type="submit" class="button">Send</button>
+</form>
+{% endblock %}

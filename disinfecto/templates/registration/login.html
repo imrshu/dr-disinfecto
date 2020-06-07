@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+<div class="columns">
+  <div class="column">
+    <form method="post">
+      {% csrf_token %}
+      {{form.as_p}}
+      <button class="button is-success" > LOGIN </button>
+    </form>
+    <a class="button is-success" href="{% url 'product:signup' %}" > SIGNUP </a>
+
+  </div>
+</div>
+
+
+{% endblock %}
