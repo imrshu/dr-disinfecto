@@ -1,0 +1,20 @@
+<form action="{% url 'product:success' %}" method="POST">
+    {% csrf_token %}
+    <script src="https://checkout.razorpay.com/v1/checkout.js"
+    data-key="rzp_test_ZMw2Id3rldLkm0"
+    data-amount="{{amount}}"
+    data-currency="INR"
+    data-order_id="{{order_id}}"
+    data-buttontext="Pay with Razorpay"
+    data-name="Dr Disinfecto"
+    data-description="Payment for the product purchased {{name}}"
+    data-image="https://example.com/your_logo.jpg"
+    data-prefill.name="Gaurav Kumar"
+    data-prefill.email="gaurav.kumar@example.com"
+    data-prefill.contact="9999999999"
+    data-theme.color="#F37254">
+    </script>
+    <input type="hidden" custom="Hidden Element" name="product" value="{{product_id}}">
+    <input type="hidden" custom="Hidden Element" name="total" value="{{total}}">
+    <input type="hidden" custom="Hidden Element" name="quantity" value="{{quantity}}">
+</form>
