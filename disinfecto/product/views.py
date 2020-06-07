@@ -55,7 +55,7 @@ def productorder(request, product_id):
             'amount': amount,
             'order_id': order_id,
             'name': products.name,
-            'product_id': products.id
+            'product_id': products.id,
             'total': total,
             'quantity': quantity
         })
@@ -93,8 +93,8 @@ def success(request):
                 Order.objects.create(
                     user=request.user,
                     product=product,
-                    quantity=request.POST.get('quantity')
-                    total=request.POST.get('total')
+                    quantity=request.POST.get('quantity'),
+                    total=request.POST.get('total'),
                     razorpay_order_id=razorpay_order_id,
                     order_success=True
                 )
