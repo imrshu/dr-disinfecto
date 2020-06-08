@@ -12,8 +12,10 @@ import hashlib
 def signup(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
+        print("lola")
         if form.is_valid():
-            user = form.save()
+            form.save()
+            print("sala")
             email = form.cleaned_data.get('email')
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(email=email, password=raw_password)

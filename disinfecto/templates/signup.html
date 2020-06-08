@@ -1,9 +1,8 @@
 {% extends 'base.html' %}
 
-
-
-
 {% block body %}
+
+
 <section class="hero is-bold is-dark">
   <div class="hero-body">
     <div class="container">
@@ -16,29 +15,77 @@
     </div>
   </div>
 </section>
-<section class="hero">
+
+<section class="hero is-bold is-dark">
   <div class="hero-body">
     <div class="container">
       <div class="columns is-centered">
         <div class="column is-half">
-          <form method="post">
-            {% csrf_token %}
-            {% for field in form %}
-            <div class="field">
-              <label class="label">{{field.label}}</label>
-              <div class="control">
-                <input class="input" type="text" placeholder="Text input">
-              </div>
+          <div class="card">
+            <div class="card-content">
+              <form action="{% url 'product:signup' %}" method="post">
+                {% csrf_token %}
+                <div class="field">
+                  <label class="label">{{form.first_name.label}}</label>
+                  <div class="control">
+                    {{form.first_name}}
+                  </div>
+                </div>
+    
+                <div class="field">
+                  <label class="label">{{form.last_name.label}}</label>
+                  <div class="control">
+                    {{form.last_name}}
+                  </div>
+                </div>
+    
+                <div class="field">
+                  <label class="label">{{form.phone.label}}</label>
+                  <div class="control">
+                    {{form.phone}}
+                  </div>
+                </div>
+    
+                <div class="field">
+                  <label class="label">{{form.address.label}}</label>
+                  <div class="control">
+                    {{form.address}}
+                  </div>
+                </div>
+    
+                <div class="field">
+                  <label class="label">{{form.email.label}}</label>
+                  <div class="control">
+                    {{form.email}}
+                  </div>
+                </div>
+    
+                <div class="field">
+                  <label class="label">{{form.password1.label}}</label>
+                  <div class="control">
+                    {{form.password1}}
+                  </div>
+                </div>
+    
+                <div class="field">
+                  <label class="label">{{form.password2.label}}</label>
+                  <div class="control">
+                    {{form.password2}}
+                  </div>
+                </div>
+                <div class="field is-grouped">
+                  <p class="control">
+                    <button class="button is-black" type="submit">
+                      SIGNUP
+                    </button>
+                  </p>
+                </div>
+              </form>
             </div>
-            {% endfor %}
-            <div class="field is-grouped">
-              <p class="control">
-                <a class="button is-black">
-                  SIGNUP
-                </a>
-              </p>
-            </div>
-          </form>
+            <footer class="card-footer">
+              <a class="button is-grey card-footer-item" href="{% url 'product:login' %}">Login</a>
+            </footer>            
+          </div>
         </div>
       </div>
     </div>
