@@ -122,9 +122,9 @@ EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'rishabh.verma11998@gmail.com'
-EMAIL_HOST_PASSWORD = "Poiuy456@@"
+EMAIL_HOST_PASSWORD = "backtrack123##"
 
-LOGIN_REDIRECT_URL = reverse_lazy('product:index')
+LOGIN_REDIRECT_URL = reverse_lazy('product:home')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
