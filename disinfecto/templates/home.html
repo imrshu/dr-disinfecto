@@ -2,7 +2,19 @@
 {% load static %}
 
 {% block body %}
-<div class="tabs" style="background-color: black;">
+
+<style>
+  .navbar.is-primary {
+    background-color: #0d335a;
+  }
+  .hero.is-black {
+    background-color: #0d335a;
+  }
+</style>
+
+{% include 'navbar.html' %}
+
+<!-- <div class="tabs" style="background-color: black;">
   <ul>
     <li class="is-active"><a href="{% url 'product:index' %}" style="color: white;">HOME</a></li>
     <li><a href="{% url 'product:login' %}" style="color: white;">Login</a></li>
@@ -10,8 +22,9 @@
     <li><a  href="#aboutus" style="color: white;">About Us</a></li>
   </ul>
 </div>
+ -->
 
-<div class="row">
+ <!-- <div class="row">
   <div class="col-md-12">
     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
       <div class="carousel-inner">
@@ -32,81 +45,186 @@
       </a>
     </div>
   </div>
-</div>
-
+</div> -->
 
 <br>
+
+<!-- Inquiry form -->
+<section class="hero is-black" id='inquiry'>
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+        Inquiry
+      </h1>
+      <h2 class="subtitle">
+        Drop us any Inquiry, we will reach out to you shortly.
+      </h2>  
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-fluid">
+    <div class="field">
+      <p class="control has-icons-left has-icons-right">
+        <input class="input" type="text" placeholder="Name">
+        <span class="icon is-small is-left">
+          <i class="fas fa-user"></i>
+        </span>
+      </p>
+    </div>
+    <div class="field">
+      <p class="control has-icons-left has-icons-right">
+        <input class="input" type="email" placeholder="Email">
+        <span class="icon is-small is-left">
+          <i class="fas fa-envelope"></i>
+        </span>
+        <span class="icon is-small is-right">
+          <i class="fas fa-check"></i>
+        </span>
+      </p>
+    </div>
+    <div class="field">
+      <p class="control has-icons-left">
+        <input class="input" type="tel" placeholder="Phone">
+        <span class="icon is-small is-left">
+          <i class="fas fa-phone"></i>
+        </span>
+      </p>
+    </div>
+    <div class="field">
+      <div class="control">
+        <textarea class="textarea" placeholder="Explain how we can help you"></textarea>
+      </div>
+    </div>
+    <div class="field">
+      <p class="control">
+        <button class="button is-success is-medium is-rounded">
+          Send Inquiry
+        </button>
+      </p>
+    </div>    
+  </div>
+</section>
+
+<br>
+
+<!-- About us -->
 <section class="hero is-black" id='aboutus'>
   <div class="hero-body">
     <div class="container">
       <h1 class="title">
-        ABOUT US
+        About Us
       </h1>
     </div>
   </div>
 </section>
 
 <br>
-<div class="tile is-ancestor has-background-black">
-  <div class="tile is-vertical is-8 has-background-black">
-    <div class="tile">
-      <div class="tile is-parent is-vertical">
-        <article class="tile is-child notification is-black">
+
+<section class="section">
+  <div class="container">
+    <div class="columns has-text-centered">
+      <div class="column is-4 card">
+        <div class="card-header">
           <p class="title">SANITIZING SERVICES</p>
+        </div>
+        <div class="card-content">
           <p class="subtitle">Residental</p>
           <p class="subtitle">Work Places</p>
           <p class="subtitle">Private Vehicles</p>
-          <p class="subtitle">Commercial Vehicles</p>
-        </article>
-      </div>
-
-    </div>
-    <div class="tile is-parent">
-      <article class="tile is-child notification is-black">
-        <p class="title">HEALTH CARE PRODUCTS</p>
-        <p class="subtitle">Sanitizers</p>
-        <p class="subtitle">Face Masks</p>
-        <p class="subtitle">PPE Kits</p>
-        <p class="subtitle">Disinfectant Chemicals</p>
-        <p class="subtitle">Infrared Thermometers</p>
-        <div class="content">
-          <!-- Content -->
+          <p class="subtitle">Commercial Vehicles</p>  
         </div>
-      </article>
     </div>
-  </div>
-  <div class="tile is-parent">
-    <article class="tile is-child notification is-black">
-      <div class="content">
-        <p class="title">KEY BENEFITS</p>
-        <p class="subtitle">Dedicated Services</p>
-        <p class="subtitle">Best Quality Products</p>
-        <p class="subtitle">Never Ending Discounts</p>
-        <p class="subtitle">Promo Offers</p>
-        <div class="content">
-          <!-- Content -->
+      <div class="column is-4 card">
+        <div class="card-header">
+          <p class="title">HEALTH CARE PRODUCTS</p>
+        </div>
+        <div class="card-content">
+          <p class="subtitle">Sanitizers</p>
+          <p class="subtitle">Face Masks</p>
+          <p class="subtitle">PPE Kits</p>
+          <p class="subtitle">Disinfectant Chemicals</p>
+          <p class="subtitle">Infrared Thermometers</p>
         </div>
       </div>
-    </article>
+      <div class="column is-4 card">
+        <div class="card-header">
+          <p class="title">KEY BENEFITS</p>
+        </div>
+        <div class="card-content">
+          <p class="subtitle">Dedicated Services</p>
+          <p class="subtitle">Best Quality Products</p>
+          <p class="subtitle">Never Ending Discounts</p>
+          <p class="subtitle">Promo Offers</p>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
+</section>
 
+<br>
 
-<footer class="footer">
-  <div class="content has-text-centered">
-    <p>
-      <strong>Dr Disinfecto</strong> <br> Visit our WebPage for more information on:
-      <br>
-      <a href="fb.com/dr.disinfecto">FACEBOOK</a>
-      <br>
-      <a href="/dr.disinfecto">INSTAGRAM</a>
-    </p>
-
-    <p>
-      <strong>Dr Disinfecto</strong><br> For more details please contact us:
-      <a href="fb.com/dr.disinfecto">+91 9818427577</a>
-    </p>
-
+<!-- Contact us -->
+<section class="hero is-black" id='contactus'>
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+        Contact Us
+      </h1>
+      <h2 class="subtitle">
+        Your Complaints, Our Priority.
+      </h2>  
+    </div>
   </div>
-</footer>
+</section>
+
+<section class="section">
+  <div class="container is-fluid">
+    <div class="columns">
+      <div class="column is-6">
+        <div class="field">
+          <p class="control has-icons-left has-icons-right">
+            <input class="input" type="text" placeholder="Name">
+            <span class="icon is-small is-left">
+              <i class="fas fa-user"></i>
+            </span>
+          </p>
+        </div>
+        <div class="field">
+          <p class="control has-icons-left has-icons-right">
+            <input class="input" type="tel" placeholder="Contact Number">
+            <span class="icon is-small is-left">
+              <i class="fas fa-phone"></i>
+            </span>
+          </p>
+        </div>
+        <div class="field">
+          <p class="control has-icons-left has-icons-right">
+            <input class="input" type="email" placeholder="Email">
+            <span class="icon is-small is-left">
+              <i class="fas fa-envelope"></i>
+            </span>
+          </p>
+        </div>
+        <div class="field">
+          <div class="control">
+            <textarea class="textarea" placeholder="Drop us any complaints regarding platform"></textarea>
+          </div>
+        </div>
+        <div class="field">
+          <p class="control">
+            <button class="button is-success is-medium is-rounded">
+              Send Complaint
+            </button>
+          </p>
+        </div>
+      </div>
+      <div class="column is-6">
+        {% include 'footer.html' %}
+      </div>
+    </div>
+  </div>
+</section>
+
 {% endblock %}
