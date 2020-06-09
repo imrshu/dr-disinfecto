@@ -6,7 +6,7 @@
     </div>
     <div id="navbarExampleTransparentExample" class="navbar-menu">      
        <div class="navbar-end">
-         <a href="#/" class="navbar-item is-active router-link-active" style="color: ghostwhite;" title="Getting Started">
+         <a href="{% url 'product:allproducts' %}" class="navbar-item is-active router-link-active" style="color: ghostwhite;" title="Getting Started">
             <span>Products</span>
          </a>
          <a href="#/form" class="navbar-item" title="Form Inputs" style="color: ghostwhite;">
@@ -18,7 +18,7 @@
          <a href="/#inquiry" class="navbar-item" title="Form Inputs" style="color: ghostwhite;">
             <span>Inquiry</span>
          </a>
-         <a href="#/form" class="navbar-item" title="Form Inputs" style="color: ghostwhite;">
+         <a href="{% url 'product:giveReview' %}" class="navbar-item" title="Form Inputs" style="color: ghostwhite;">
             <span>Reviews</span>
          </a>
          <a href="#/form" class="navbar-item" title="Form Inputs" style="color: ghostwhite;">

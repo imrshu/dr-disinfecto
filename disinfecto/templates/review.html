@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+
+<style>
+  .navbar.is-primary {
+    background-color: #0d335a;
+  }
+</style>
+
+
+{% include 'navbar.html' %}
+
+<br>
+
+<section class="section">
+  <div class="container has-text-centered">
+    <h1 class="title">
+      DR. DISINFECTO
+    </h1>
+    <h2 class="subtitle">
+      Product Review
+    </h2>
+  </div>
+</section>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-half">
+          <div class="card">
+            <div class="card-content">
+            <form action="{% url 'product:giveReview' %}" method="post">
+              {% csrf_token %}
+              <div class="field">
+                <div class="control">
+                    <input class="input" type="text" placeholder="name" name="first_name" value="{{username}}" disabled>
+                </div>
+              </div>
+              <div class="field">
+                <label class="label">Product Name</label>
+                <div class="control">
+                    <input class="input" type="text" placeholder="Product name" name="product_name">
+                </div>
+              </div>
+              <div class="field">
+                <label class="label">Rating</label>
+                <div class="control">
+                    <input class="input" type="tel" placeholder="Rating" name="rating">
+                </div>
+              </div>
+              <div class="field">
+                <label class="label">Review</label>
+                <div class="control">
+                    <textarea class="textarea" placeholder="e.g. Hello world" name="review"></textarea>
+                </div>
+              </div>
+              <div class="field is-grouped">
+                <p class="control">
+                  <button class="button is-black" type="submit">
+                    Submit
+                  </button>
+                </p>
+              </div>
+            </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</section>
+
+
+<script>
+  document.getElementById('id_username').className = 'input';
+  document.getElementById('id_password').className = 'input';
+</script>
+
+{% endblock %}

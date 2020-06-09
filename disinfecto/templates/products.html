@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <style>
+        .navbar.is-primary {
+        background-color: #0d335a;
+        }
+    </style>
+  
+    {% include 'navbar.html' %}
+
+    <br>
+
+    <section class="section">
+      <div class="container has-text-centered">
+        <h1 class="title">
+          DR. DISINFECTO
+        </h1>
+        <h2 class="subtitle">
+          PRODUCTS
+        </h2>
+      </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+          <div class="columns has-text-centered">
+              {% for product in products %}
+              <div class="column is-3">
+                <div class="card">
+                    <div class="card-image">
+                      <figure class="image" style="height:200px; width:100%;">
+                        <img src="{{product.image.url}}" alt="Placeholder imaage" style="width: 100%; height: 100%;">
+                      </figure>
+                    </div>
+                    <div class="card-content">
+                      <div class="media">
+                        <div class="media-content">
+                          <p class="title is-4" style='text-transform:capitalize;'>{{product.name}}</p>
+                          <p class="subtitle is-6">Size- {{product.size}}</p>
+                          <p class="subtitle is-6">Colour- {{product.colour}}</p>
+                          <p class="subtitle is-6">Price- &#8377;{{product.price}}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <footer class="card-footer">
+                      <a href="{% url 'product:productorder' product.id %}" class="card-footer-item">PURCHASE NOW</a>
+                    </footer>
+                  </div>                                    
+              </div>
+              {% endfor %}
+          </div>
+        </div>
+      </section>    
+
+
+{% endblock %}

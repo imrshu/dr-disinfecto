@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from .forms import *
 from .models import *
@@ -34,6 +35,7 @@ def home(request):
         return render(request, 'index.html', {'products':products})
 
 
+@login_required
 def productorder(request, product_id):
     if request.method == 'GET':
         products = Product.objects.get(id=int(product_id))
@@ -73,7 +75,6 @@ def feedback(request):
         email = request.POST.get('email')
         message = request.POST.get('msg')
         send_mail('disinfecto', message, email, ['rishabh.verma11998@gmail.com'])
-        print("suexsuces")
         return redirect('home')
 
 
@@ -111,4 +112,68 @@ def success(request):
 
 def index(request):
     if request.method == 'GET':
-        return render(request, 'home.html')
+        star_rating = []
+        images = BannerImage.objects.all()
+        reviews = Review.objects.all()
+        for review in reviews:
+            if review.ratings:
+                for i in range(int(review.ratings)):
+                    star_rating.append(i)
+        print(star_rating)
+        return render(request, 'home.html', {
+            'images': images,
+            'reviews': reviews,
+            'ratings': star_rating
+        })
+
+def getAllProducts(request):
+    if request.method == 'GET':
+        products = Product.objects.all()
+        return render(request, 'products.html', {
+            'products': products
+        })
+
+
+@login_required
+def giveReview(request):
+    if request.method == 'GET':
+        print(request.user.first_name)
+        print(request.user.email)
+        return render(request, 'review.html', {
+            'username': request.user.first_name
+        })
+    else:
+        Review.objects.create(
+            user=request.user,
+            product_name=request.POST.get('product_name'),
+            review_text=request.POST.get('review'),
+            ratings=request.POST.get('rating')
+        )
+        return redirect('product:index')
+
+
+def inquiry(request):
+    if request.method == 'POST':
+        message = f'''
+            This is the formal inquiry by the customer {request.POST.get('customer_name')} \n
+            Customer additonal details:- \n
+            Email- {request.POST.get('email')}\n
+            Phone Number- {request.POST.get('phone')}\n
+            Inquiry is below :-\n
+            {request.POST.get('inquiry_text')} 
+        '''
+        send_mail('Dr Disinfecto Customer Inquiry', message, request.POST.get('email'), ['rishabh.verma11998@gmail.com'])
+        return redirect('product:index')
+
+def complaint(request):
+    if request.method == 'POST':
+        message = f'''
+            This is the complaint by the customer {request.POST.get('customer_name')} \n
+            Customer additonal details:- \n
+            Email- {request.POST.get('email')}\n
+            Phone Number- {request.POST.get('phone')}\n
+            Complaint is below :-\n
+            {request.POST.get('complaint_text')} 
+        '''
+        send_mail('Dr Disinfecto Customer Complaint', message, request.POST.get('email'), ['rishabh.verma11998@gmail.com'])
+        return redirect('product:index')

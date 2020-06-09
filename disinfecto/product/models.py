@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.contrib.auth import get_user_model
 from . import constants as user_constants
 from .managers import *
 
@@ -68,3 +69,21 @@ class Feedback(models.Model):
 
     def __str__(self):
         return self.email
+
+
+class BannerImage(models.Model):
+    image = models.ImageField()
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.image.url
+
+class Review(models.Model):
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    product_name = models.CharField(max_length=60)
+    review_text = models.TextField(null=True, blank=True)
+    ratings = models.PositiveIntegerField()
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.user.first_name
