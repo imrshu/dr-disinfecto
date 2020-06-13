@@ -14,17 +14,13 @@ import hashlib
 def signup(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
-        print("lola")
         if form.is_valid():
             form.save()
-            print("sala")
             email = form.cleaned_data.get('email')
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(email=email, password=raw_password)
-            print(user)
             login(request, user)
-            print('signup successfully')
-            return redirect('home')
+            return redirect('product:home')
     else:
         form = CustomUserCreationForm()
     return render(request, 'signup.html', {'form': form})
