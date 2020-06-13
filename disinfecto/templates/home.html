@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load extras %}
 
 {% block body %}
 
@@ -151,26 +152,25 @@
 </section>
 
 <section class="section">
-  <div class="container">
-    <div class="columns">
-      {% for review in reviews %}
-      <div class="column is-3 card">
-        <div class="card-header">
-          <p class="subtitle">{{ request.user.first_name }}</p>
-        </div>
-        <div class="card-content">
-          <p><b>Product-</b> {{ review.product_name }}</p>
-          <p><b>Review-</b> {{review.review_text}}</p>
-          {% for rating in ratings %}
-            <span class="icon">
-              <i class="fas fa-star"></i>
-            </span>
-          {% endfor %}
-        </div>
+  <div class="columns">
+    {% for review in reviews %}
+    <div class="column is-one-fifth card">
+      <div class="card-header">
+        <p class="subtitle">{{ review.customer_name }}</p>
       </div>
-      {% endfor %}
-    </div>    
-  </div>
+      <div class="card-content">
+        <p>{{ review.review_text }}</p>
+      </div>
+      <footer class="card-footer  has-text-centered">
+        {% for rating in review.ratings|times %}
+          <span class="icon">
+            <i class="fas fa-star"></i>
+          </span>
+        {% endfor %}
+      </footer>
+    </div>
+    {% endfor %}
+  </div>    
 </section>
 
 <br>

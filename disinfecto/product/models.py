@@ -79,11 +79,10 @@ class BannerImage(models.Model):
         return self.image.url
 
 class Review(models.Model):
-    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
-    product_name = models.CharField(max_length=60)
+    customer_name = models.CharField(max_length=30, null=True, blank=True)
     review_text = models.TextField(null=True, blank=True)
     ratings = models.PositiveIntegerField()
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.user.first_name
+        return self.product_name

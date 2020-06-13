@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+from django.conf import settings
 from .forms import *
 from .models import *
 from django.contrib.auth import login, authenticate
@@ -74,7 +75,7 @@ def feedback(request):
     else:
         email = request.POST.get('email')
         message = request.POST.get('msg')
-        send_mail('disinfecto', message, email, ['rishabh.verma11998@gmail.com'])
+        send_mail('disinfecto', message, email, [settings.EMAIL_HOST_USER])
         return redirect('home')
 
 
@@ -112,18 +113,11 @@ def success(request):
 
 def index(request):
     if request.method == 'GET':
-        star_rating = []
         images = BannerImage.objects.all()
         reviews = Review.objects.all()
-        for review in reviews:
-            if review.ratings:
-                for i in range(int(review.ratings)):
-                    star_rating.append(i)
-        print(star_rating)
         return render(request, 'home.html', {
             'images': images,
-            'reviews': reviews,
-            'ratings': star_rating
+            'reviews': reviews
         })
 
 def getAllProducts(request):
@@ -160,9 +154,9 @@ def inquiry(request):
             Email- {request.POST.get('email')}\n
             Phone Number- {request.POST.get('phone')}\n
             Inquiry is below :-\n
-            {request.POST.get('inquiry_text')} 
+            {request.POST.get('inquiry_text')}
         '''
-        send_mail('Dr Disinfecto Customer Inquiry', message, request.POST.get('email'), ['rishabh.verma11998@gmail.com'])
+        send_mail('Dr Disinfecto Customer Inquiry', message, request.POST.get('email'), [settings.EMAIL_HOST_USER])
         return redirect('product:index')
 
 def complaint(request):
@@ -175,5 +169,5 @@ def complaint(request):
             Complaint is below :-\n
             {request.POST.get('complaint_text')} 
         '''
-        send_mail('Dr Disinfecto Customer Complaint', message, request.POST.get('email'), ['rishabh.verma11998@gmail.com'])
+        send_mail('Dr Disinfecto Customer Complaint', message, request.POST.get('email'), [settings.EMAIL_HOST_USER])
         return redirect('product:index')
