@@ -2,34 +2,23 @@
 
 {% block body %}
 
-{% include 'navbar.html' %}
-
 <style>
   .navbar.is-primary {
     background-color: #0d335a;
   }
 </style>
 
-<br>
+{% include 'navbar.html' %}
 
-<section class="section">
-  <div class="container has-text-centered">
-    <h1 class="title">
-      DR. DISINFECTO
-    </h1>
-    <h2 class="subtitle">
-      Sign Up
-    </h2>
-  </div>
-</section>
-
-<section class="hero">
+<section class="hero is-fullheight-with-navbar is-bold">
   <div class="hero-body">
     <div class="container">
       <div class="columns is-centered">
         <div class="column is-half">
-          <div class="card">
-            <div class="card-content">
+          <p class="title">Dr Disinfecto</p>
+          <p class="subtitle">Register Now</p>
+          <div class="box">
+            <div>
               <form action="{% url 'product:signup' %}" method="post">
                 {% csrf_token %}
                 <div class="field">
@@ -80,18 +69,23 @@
                     {{form.password2}}
                   </div>
                 </div>
-                <div class="field is-grouped">
-                  <p class="control">
-                    <button class="button is-black" type="submit">
-                      SIGNUP
-                    </button>
-                  </p>
+
+                <div class="field">
+                  <label class="label">...</label>
+                  <div class="control">
+                    <button type="submit" id="signup-btn" class="button is-success"> Sign Up </button>
+                  </div>
                 </div>
+
+                <hr>
+                <div class="columns is-centered">
+                  <div class="column is-6">
+                    <p> Alrady have an account, <a href="{% url 'product:login' %}" class=""><b>Login here</b></a></p>
+                  </div>
+                </div>
+
               </form>
             </div>
-            <footer class="card-footer">
-              <a class="button is-grey card-footer-item" href="{% url 'product:login' %}">Login</a>
-            </footer>            
           </div>
         </div>
       </div>

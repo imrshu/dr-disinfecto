@@ -12,66 +12,57 @@
 
 {% include 'navbar.html' %}
 
-<br>
-
-<section class="section">
-  <div class="container has-text-centered">
-    <h1 class="title">
-      DR. DISINFECTO
-    </h1>
-    <h2 class="subtitle">
-      Login
-    </h2>
-  </div>
-</section>
-
-
-<section class="hero">
+<section class="hero is-fullheight-with-navbar is-bold">
   <div class="hero-body">
     <div class="container">
       <div class="columns is-centered">
-        <div class="column is-half">
-          <div class="card">
-            <div class="card-content">
-            <form method="post">
-              {% csrf_token %}
-              <div class="field">
-                <label class="label">{{ form.username.label }}</label>
-                <div class="control">
-                  {{ form.username }}
+        <div class="column is-6">
+          <p class="title">Dr Disinfecto</p>
+          <p class="subtitle">Login Now</p>
+          <div class="box">
+            <div>
+              <form method="post">
+                {% csrf_token %}
+                <div class="columns is-multiline">
+                  <div class="column is-5">
+                    <div class="field">
+                      <label class="label">{{ form.username.label }}</label>
+                      <div class="control">
+                        {{ form.username }}
+                      </div>
+                      {% if form.errors %}
+                      <p class="help is-danger">Email is invalid</p>
+                      {% endif %}
+                    </div>    
+                  </div>
+                  <div class="column is-5">
+                    <div class="field">
+                      <label class="label">{{ form.password.label }}</label>
+                      <div class="control">
+                        {{ form.password }}
+                      </div>
+                      {% if form.errors %}
+                      <p class="help is-danger">Password is incorrect</p>
+                      {% endif %}
+                    </div>    
+                  </div>
+                  <div class="column is-2">
+                    <div class="field">
+                      <label class="label">...</label>
+                      <div class="control">
+                        <button type="submit" id="login-btn" class="button is-success"> Login </button>
+                      </div>
+                    </div>    
+                  </div>
                 </div>
-                {% if form.errors %}
-                <p class="help is-danger">Email is invalid</p>
-                {% endif %}
-              </div>
-              <div class="field">
-                <label class="label">{{ form.password.label }}</label>
-                <div class="control">
-                  {{ form.password }}
-                </div>
-                {% if form.errors %}
-                <p class="help is-danger">Password is incorrect</p>
-                {% endif %}
-              </div>
-              <div class="field is-grouped">
-                <p class="control">
-                  <button class="button is-black" type="submit">
-                    LOGIN
-                  </button>
-                </p>
-                <p class="control">
-                  <a class="button is-light" href="{% url 'product:signup' %}">
-                    SIGNUP
-                  </a>
-                </p>
-              </div>
-            </form>
+              </form>
+              <hr>
+              <p> Dont have an account, <a href="{% url 'product:signup' %}" class=""><b>Register here</b></a></p>              
+              <p> Forgot password ? <a href="{% url 'password_reset' %}" class=""><b>Reset now</b></a></p>
             </div>
           </div>
         </div>
       </div>
-
-
     </div>
   </div>
 </section>

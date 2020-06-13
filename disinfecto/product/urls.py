@@ -1,9 +1,11 @@
 from django.urls import path
 from .views import *
-from django.contrib.auth.views import login, logout
-
+from django.contrib.auth.views import (login, logout, password_reset, password_reset_done, 
+password_reset_confirm, password_reset_complete
+)
 
 app_name = 'product'
+
 urlpatterns = [
     path('', index, name = 'index'),
     path('complaint', complaint, name = 'complaint'),

@@ -103,6 +103,18 @@
   from {opacity: .4}
   to {opacity: 1}
 }
+
+@media screen and (min-width: 350px) and (max-width: 546px) {
+    .slideshow-container {
+      max-width: 100%;
+      position: relative;
+      margin: auto;
+    }
+    .container.is-fluid {
+      padding: 0;
+    }
+  }
+
 </style>
 
 {% include 'navbar.html' %}
@@ -302,7 +314,7 @@
         Contact Us
       </h1>
       <h2 class="subtitle">
-        Your Complaints, Our Priority.
+        Share Your Valuable FeedBack.
       </h2>  
     </div>
   </div>
@@ -346,7 +358,7 @@
         <div class="field">
           <p class="control">
             <button type="submit" class="button is-success is-medium is-rounded">
-              Send Complaint
+              Submit
             </button>
           </p>
         </div>
