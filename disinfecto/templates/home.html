@@ -149,44 +149,6 @@
 
 <br>
 
-<!-- Reviews -->
-<section class="hero is-black" id='reviews'>
-  <div class="hero-body">
-    <div class="container">
-      <h1 class="title">
-        Reviews
-      </h1>
-      <h2 class="subtitle">
-        What customers think about our products.
-      </h2>  
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="columns">
-    {% for review in reviews %}
-    <div class="column is-one-fifth card">
-      <div class="card-header">
-        <p class="subtitle">{{ review.customer_name }}</p>
-      </div>
-      <div class="card-content">
-        <p>{{ review.review_text }}</p>
-      </div>
-      <footer class="card-footer  has-text-centered">
-        {% for rating in review.ratings|times %}
-          <span class="icon">
-            <i class="fas fa-star"></i>
-          </span>
-        {% endfor %}
-      </footer>
-    </div>
-    {% endfor %}
-  </div>    
-</section>
-
-<br>
-
 <!-- Inquiry form -->
 <section class="hero is-black" id='inquiry'>
   <div class="hero-body">
@@ -246,6 +208,44 @@
     </div>
   </form> 
   </div>
+</section>
+
+<br>
+
+<!-- Reviews -->
+<section class="hero is-black" id='reviews'>
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+        Reviews
+      </h1>
+      <h2 class="subtitle">
+        What customers think about our products.
+      </h2>  
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="columns">
+    {% for review in reviews %}
+    <div class="column is-one-fifth card">
+      <div class="card-header">
+        <p class="subtitle">{{ review.customer_name }}</p>
+      </div>
+      <div class="card-content">
+        <p>{{ review.review_text }}</p>
+      </div>
+      <footer class="card-footer  has-text-centered">
+        {% for rating in review.ratings|times %}
+          <span class="icon">
+            <i class="fas fa-star"></i>
+          </span>
+        {% endfor %}
+      </footer>
+    </div>
+    {% endfor %}
+  </div>    
 </section>
 
 <br>
