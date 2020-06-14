@@ -47,7 +47,7 @@ class Product(models.Model):
 
 
 class Order(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
     total = models.CharField(max_length=20, null=True, blank=True)
@@ -86,3 +86,13 @@ class Review(models.Model):
 
     def __str__(self):
         return self.customer_name
+
+
+class Cart(models.Model):
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.IntegerField()
+    price = models.FloatField()
+
+    def __str__(self):
+        return self.user.first_name

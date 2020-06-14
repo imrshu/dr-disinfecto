@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.conf import settings
@@ -6,6 +6,8 @@ from .forms import *
 from .models import *
 from django.contrib.auth import login, authenticate
 from django.core.mail import send_mail
+from ast import literal_eval
+from django.db.models import Sum
 import requests
 import hmac
 import hashlib
@@ -167,3 +169,32 @@ def complaint(request):
         '''
         send_mail('Dr Disinfecto Customer Complaint', message, request.POST.get('email'), [settings.EMAIL_HOST_USER])
         return redirect('product:index')
+
+
+@login_required
+def addtocart(request):
+    if request.method == 'POST':
+        data = request.body.decode('utf-8')
+        data = literal_eval(data)
+        product = Product.objects.get(id=data.get('id'))
+        total_price = product.price * data.get('quantity')
+        Cart.objects.create(
+            user=request.user,
+            product=product,
+            quantity=data.get('quantity'),
+            price=total_price
+        )
+    elif request.method == 'DELETE':
+        Cart.objects.get(pk=request.GET.get('id'), user=request.user.pk).delete()
+    return HttpResponse("hi")
+
+
+@login_required
+def showcart(request):
+    if request.method == 'GET':
+        items = Cart.objects.filter(user=request.user.pk)
+        total_price = Cart.objects.filter(user=request.user.pk).aggregate(Sum('price'))['price__sum']
+        return render(request, 'cartitems.html', {
+            'items': items,
+            'total_price': total_price
+        })
