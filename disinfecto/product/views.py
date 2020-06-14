@@ -31,7 +31,7 @@ def signup(request):
 def home(request):
     if request.method == 'GET':
         products = Product.objects.all()
-        return render(request, 'index.html', {'products':products})
+        return render(request, 'products.html', {'products':products})
 
 
 @login_required
@@ -121,7 +121,7 @@ def index(request):
 def getAllProducts(request):
     if request.method == 'GET':
         products = Product.objects.all()
-        return render(request, 'products.html', {
+        return render(request, 'index.html', {
             'products': products
         })
 
