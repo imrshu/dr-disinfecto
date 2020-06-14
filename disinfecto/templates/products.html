@@ -99,7 +99,7 @@
 
       // functin for add to cart
       const add_to_cart = (product_id) => {
-        const cart_url = `http://localhost:8000/cart`;
+        const cart_url = '{% url "product:addtocart" %}';
         const headers = {
           "Content-Type": "application/json",
           "X-CSRFToken": csrftoken
