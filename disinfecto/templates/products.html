@@ -11,47 +11,117 @@
 
     <br>
 
-    <section class="section">
-      <div class="container has-text-centered">
-        <h1 class="title">
-          DR. DISINFECTO
-        </h1>
-        <h2 class="subtitle">
-          PRODUCTS
-        </h2>
+    <section class="hero is-info">
+      <div class="hero-body">
+        <div class="container has-text-centered">
+          <h1 class="title">Dr Disinfecto</h1>
+          <h2 class="subtitle">
+            All Products
+          </h2>
+        </div>
       </div>
     </section>
+    
+    <!-- All products -->
 
     <section class="section">
         <div class="container">
-          <div class="columns has-text-centered">
+          <div class="columns is-multiline">
               {% for product in products %}
-              <div class="column is-3">
-                <div class="card">
-                    <div class="card-image">
-                      <figure class="image" style="height:200px; width:100%;">
-                        <img src="{{product.image.url}}" alt="Placeholder imaage" style="width: 100%; height: 100%;">
-                      </figure>
-                    </div>
-                    <div class="card-content">
-                      <div class="media">
-                        <div class="media-content">
-                          <p class="title is-4" style='text-transform:capitalize;'>{{product.name}}</p>
-                          <p class="subtitle is-6">Size- {{product.size}}</p>
-                          <p class="subtitle is-6">Colour- {{product.colour}}</p>
-                          <p class="subtitle is-6">Price- &#8377;{{product.price}}</p>
+              <div class="column is-3 card">
+                <div class="columns is-multiline">
+                  <div class="column is-12">
+                    <figure class="image" style="height:200px; width:100%;">
+                      <img src="{{product.image.url}}" alt="Placeholder imaage" style="width: 100%; height: 100%;">
+                    </figure>
+                  </div>
+                  <div class="column is-12 has-text-centered">
+                    <p class="title" style="color: black; text-transform: capitalize;">{{ product.name }}</p>
+                  </div>
+                  <div class="column is-12">
+                    <div class="field">
+                      <label class="label">Select Quantity</label>
+                      <!-- quantity selection -->
+                      <div class="control">
+                        <input class="input" type="range" min="1" max="{{ product.qty }}"
+                          id="qty_{{forloop.counter}}"
+                          onchange="getQuantity('qty_{{forloop.counter}}', 'helptext_{{forloop.counter}}');"
+                          required>
+                      </div>
+                      <p class="help is-info" id="helptext_{{forloop.counter}}"></p>
+                    </div>                    
+                  </div>
+                  <div class="column is-12 has-text-centered">
+                    <div class="level is-mobile">
+                      <div class="level-left">
+                        <div class="level-item">
+                          <p>Size- <strong>{{ product.size }}</strong></p>
+                        </div>
+                        <div class="level-item">
+                          <p>Price- <strong>{{ product.price }}</strong></p>
                         </div>
                       </div>
                     </div>
-                    <footer class="card-footer">
-                      <a href="{% url 'product:productorder' product.id %}" class="card-footer-item">PURCHASE NOW</a>
-                    </footer>
-                  </div>                                    
+                  </div>
+                  {% if product.qty != 0 %}
+                  <div class="column is-12">
+                    <button class="button is-link is-fullwidth"
+                      onclick="add_to_cart('{{ product.id }}');">
+                      Add to Cart
+                    </button>
+                  </div>
+                  {% else %}
+                  <div class="column is-12">
+                    <article class="message is-danger">
+                      <div class="message-body">
+                        Product Not Available
+                    </div>
+                  </article>
+                </div>
+                {% endif %}
               </div>
-              {% endfor %}
-          </div>
+            </div>
+            {% endfor %}
         </div>
-      </section>    
+      </div>
+    </section>    
 
+    {% include 'csrfcookie.html' %}
+
+    <script>
+      let qty_val = 0;
+      // function for fetching the quantity
+      const getQuantity = (qty_id, helptext_id) => {
+        qty_val = 0;
+        qty_val = document.getElementById(qty_id).value;
+        document.getElementById(helptext_id).innerHTML = `Quantity selected- ${qty_val}`;
+      };
+
+      // functin for add to cart
+      const add_to_cart = (product_id) => {
+        const cart_url = `http://localhost:8000/cart`;
+        const headers = {
+          "Content-Type": "application/json",
+          "X-CSRFToken": csrftoken
+        }
+
+        const payload = {
+          'id': parseInt(product_id),
+          'quantity': parseInt(qty_val)
+        }
+
+        if (qty_val === 0) {
+          alert('please select the product quantity');
+        } else {
+            fetch(cart_url, {
+            method: 'POST',
+            headers: headers,
+            body: JSON.stringify(payload)
+          }).then(success => {
+            alert('product added to cart');
+          }).catch(err => alert('Server error encountered'));
+        }
+      };
+    </script>
 
 {% endblock %}

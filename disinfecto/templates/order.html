@@ -1,32 +1,49 @@
 {% extends 'base.html' %}
 
-
-
-
 {% block body %}
+
+{% include 'navbar.html' %}
+
+<br>
+
+<section class="hero is-info">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">Dr Disinfecto</h1>
+      <h2 class="subtitle">
+        Purchase the Product
+      </h2>
+    </div>
+  </div>
+</section>
+
+
 <section class="hero">
   <div class="hero-body">
     <div class="container">
       <div class="columns is-centered">
-        <div class="column is-half">
+        <div class="column is-half box">
           <form method="post">
             {% csrf_token %}
             <div class="field">
-              <label class="label">Quantity</label>
+              <label class="label">Enter the Quantity</label>
               <div class="control">
-                <input class="input" type="text" placeholder="Enter Quantity " name="quantity">
+                <input class="input" type="text" placeholder="Enter Quantity " name="quantity" required>
               </div>
               {% if error %}
-              <p class="help is-success"> {{error}} </p>
+              <p class="help is-danger"> {{error}} </p>
               {% else %}
               <p class="help is-success"> Quantity is Available {{products.qty}} </p>
               {% endif %}
             </div>
             <div class="field is-grouped">
               <p class="control">
-                <button type="submit" class="button is-black">
+                <button type="submit" class="button is-link">
                   Order Confirm
                 </button>
+              </p>
+              <p class="control">
+                <a href="javascript: history.back();" class="button is-grey is-inverted">Back</a>
               </p>
             </div>
           </form>

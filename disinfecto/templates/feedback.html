@@ -1,11 +1,27 @@
 {% extends 'base.html' %}
 
 {% block body %}
+
+{% include 'navbar.html' %}
+
+<br>
+
+<section class="hero is-info">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">Dr Disinfecto</h1>
+      <h2 class="subtitle">
+        Give your valueable feedback
+      </h2>
+    </div>
+  </div>
+</section>
+
 <section class="hero">
   <div class="hero-body">
     <div class="container">
       <div class="columns is-centered">
-        <div class="column is-half">
+        <div class="column is-half card">
           <form method="post">
             {% csrf_token %}
 
@@ -25,8 +41,8 @@
 
             <div class="field is-grouped">
               <p class="control">
-                <button type="submit" class="button is-black">
-                  FEEDBACK SEND
+                <button type="submit" class="button is-link is-outlined">
+                  Submit
                 </button>
               </p>
             </div>
