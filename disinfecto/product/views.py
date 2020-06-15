@@ -219,8 +219,9 @@ def addtocart(request):
     if request.method == 'POST':
         data = request.body.decode('utf-8')
         data = literal_eval(data)
-        product = Product.objects.get(id=data.get('id'))
-        if data.get('quantity') != 0:
+        print(data)
+        if data.get('product'):
+            product = Product.objects.get(id=data.get('id'))
             total_price = product.price * data.get('quantity')
             Cart.objects.create(
                 user=request.user,
@@ -228,15 +229,17 @@ def addtocart(request):
                 quantity=data.get('quantity'),
                 price=total_price
             )
+            return HttpResponse("product added into cart")
         else:
+            print("sada")
+            service = Service.objects.get(id=data.get('id'))
             Cart.objects.create(
                 user=request.user,
-                product=product,
+                service=service,
                 quantity=0,
-                price=total_price
+                price=service.price
             )
-        return HttpResponse("product added into cart")
-
+            return HttpResponse("service added into cart")
     elif request.method == 'DELETE':
         Cart.objects.get(pk=request.GET.get('id'), user=request.user.pk).delete()
         return HttpResponse("product removed from cart")

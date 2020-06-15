@@ -50,9 +50,15 @@
                       {% for item in items %}
                       <div class="column is-full">
                           <div class="level box">
+                            {% if item.product.id %}
                               <div class="level-left">
                                   <p style="text-transform: capitalize;">{{ item.product.id|getname }} (Qty- {{ item.quantity }})</p>
                               </div>
+                            {% else %}
+                              <div class="level-left">
+                                  <p style="text-transform: capitalize;">{{ item.service.id|getsname }}</p>
+                              </div>
+                            {% endif %}
                               <div class="level-right">
                                   <p>{{ item.price }}</p>&nbsp;
                                   <button class="button" onclick="removeItem('{{ item.pk }}');">
