@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'active_link',
     'product',
 ]
 
@@ -121,3 +122,6 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+ACTIVE_LINK_CSS_CLASS = 'is-active router-link-active'
+ACTIVE_LINK_STRICT = True

@@ -17,28 +17,35 @@
 
 <section class="section">
     <div class="container">
-        <div class="columns">
-            <div class="column is-6 box has-text-centered">
-                <form action="{% url 'product:success' %}" method="POST">
-                    {% csrf_token %}
-                    <script src="https://checkout.razorpay.com/v1/checkout.js"
-                    data-key="rzp_test_ZMw2Id3rldLkm0"
-                    data-amount="{{amount}}"
-                    data-currency="INR"
-                    data-order_id="{{order_id}}"
-                    data-buttontext="Pay with Razorpay"
-                    data-name="Dr Disinfecto"
-                    data-image="{% static 'images/Small logo.PNG' %}"
-                    data-theme.color="#F37254">
-                    </script>
-                </form>        
-            </div>
-            <div class="column is-6">
-                <a href="javascript: history.back();" class="button is-black">Back</a>
+        <div class="columns is-centered">
+            <div class="column is-6 has-text-centered">
+                <article class="message is-info">
+                    <div class="message-header">
+                      <p>Proceed to Pay</p>
+                      <a href="javascript: history.back();" style="text-decoration: none;">
+                        <span class="icon">
+                            <i class="fas fa-arrow-left"></i>
+                        </span>
+                      </a>
+                    </div>
+                    <div class="message-body">
+                        <form action="{% url 'product:success' %}" method="POST">
+                            {% csrf_token %}
+                            <script src="https://checkout.razorpay.com/v1/checkout.js"
+                            data-key="rzp_test_ZMw2Id3rldLkm0"
+                            data-amount="{{amount}}"
+                            data-currency="INR"
+                            data-order_id="{{order_id}}"
+                            data-buttontext="Pay with Razorpay"
+                            data-name="Dr Disinfecto"
+                            data-image="{% static 'images/Small logo.PNG' %}"
+                            data-theme.color="#294066">
+                            </script>
+                        </form>        
+                    </div>
+                </article>
             </div>
         </div>
     </div>
 </section>
-
-
 {% endblock %}

@@ -17,10 +17,8 @@ import hashlib
 def signup(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
-        print("user")
         if form.is_valid():
             form.save()
-            print("saved")
             email = form.cleaned_data.get('email')
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(email=email, password=raw_password)
@@ -28,14 +26,18 @@ def signup(request):
             return redirect('product:home')
     else:
         form = CustomUserCreationForm()
-    return render(request, 'signup.html', {'form': form})
+    return render(request, 'signup.html', {
+        'form': form
+    })
 
 
 @login_required
 def home(request):
     if request.method == 'GET':
         products = Product.objects.all()
-        return render(request, 'products.html', {'products':products})
+        return render(request, 'products.html', {
+            'products':products
+        })
 
 
 @login_required
@@ -67,47 +69,48 @@ def payment(request):
         })
 
 
+# @login_required
+# def productorder(request, product_id):
+#     if request.method == 'GET':
+#         products = Product.objects.get(id=int(product_id))
+#         return render(request, 'order.html', {'products':products})
+#     else:
+#         products = Product.objects.get(id=product_id)
+#         quantity = request.POST.get('quantity')
+#         if int(quantity) <= int(products.qty):
+
+#             total = int(products.price) * int(quantity)
+#             response = requests.post('https://api.razorpay.com/v1/orders',
+#             json={
+#             'amount': total*100,
+#             'currency': 'INR',
+#             'payment_capture':1
+#             },
+#             headers={'content-type':'application/json',
+#             'Authorization': 'Basic cnpwX3Rlc3RfWk13MklkM3JsZExrbTA6UjdQaFRYaVdqb0o1WW9lc0FJNGRpUlJR'
+#             }).json()
+#             amount = response.get('amount')
+#             order_id = response.get('id')
+#             return render(request, 'razorpay_form.html', {
+#                 'amount': amount,
+#                 'order_id': order_id,
+#                 'name': products.name,
+#                 'product_id': products.id,
+#                 'total': total,
+#                 'quantity': quantity
+#             })
+#         else:
+#             return render(request, 'order.html', {'error':"Quantity is Not Available"})
+
 
 @login_required
-def productorder(request, product_id):
-    if request.method == 'GET':
-        products = Product.objects.get(id=int(product_id))
-        return render(request, 'order.html', {'products':products})
-    else:
-        products = Product.objects.get(id=product_id)
-        quantity = request.POST.get('quantity')
-        if int(quantity) <= int(products.qty):
-
-            total = int(products.price) * int(quantity)
-            response = requests.post('https://api.razorpay.com/v1/orders',
-            json={
-            'amount': total*100,
-            'currency': 'INR',
-            'payment_capture':1
-            },
-            headers={'content-type':'application/json',
-            'Authorization': 'Basic cnpwX3Rlc3RfWk13MklkM3JsZExrbTA6UjdQaFRYaVdqb0o1WW9lc0FJNGRpUlJR'
-            }).json()
-            amount = response.get('amount')
-            order_id = response.get('id')
-            return render(request, 'razorpay_form.html', {
-                'amount': amount,
-                'order_id': order_id,
-                'name': products.name,
-                'product_id': products.id,
-                'total': total,
-                'quantity': quantity
-            })
-        else:
-            return render(request, 'order.html', {'error':"Quantity is Not Available"})
-
 def feedback(request):
     if request.method == 'GET':
         return render(request, 'feedback.html')
     else:
         email = request.POST.get('email')
         message = request.POST.get('msg')
-        send_mail('disinfecto', message, email, [settings.EMAIL_HOST_USER])
+        send_mail('Dr Disinfecto Customer FeedBack', message, email, [settings.EMAIL_HOST_USER])
         return redirect('home')
 
 
@@ -139,6 +142,7 @@ def success(request):
             else:
                 return HttpResponse('payment failed')
 
+
 def index(request):
     if request.method == 'GET':
         images = BannerImage.objects.all()
@@ -148,6 +152,7 @@ def index(request):
             'reviews': reviews
         })
 
+
 def getAllProducts(request):
     if request.method == 'GET':
         products = Product.objects.all()
@@ -156,22 +161,22 @@ def getAllProducts(request):
         })
 
 
-@login_required
-def giveReview(request):
-    if request.method == 'GET':
-        print(request.user.first_name)
-        print(request.user.email)
-        return render(request, 'review.html', {
-            'username': request.user.first_name
-        })
-    else:
-        Review.objects.create(
-            user=request.user,
-            product_name=request.POST.get('product_name'),
-            review_text=request.POST.get('review'),
-            ratings=request.POST.get('rating')
-        )
-        return redirect('product:index')
+# @login_required
+# def giveReview(request):
+#     if request.method == 'GET':
+#         print(request.user.first_name)
+#         print(request.user.email)
+#         return render(request, 'review.html', {
+#             'username': request.user.first_name
+#         })
+#     else:
+#         Review.objects.create(
+#             user=request.user,
+#             product_name=request.POST.get('product_name'),
+#             review_text=request.POST.get('review'),
+#             ratings=request.POST.get('rating')
+#         )
+#         return redirect('product:index')
 
 
 def inquiry(request):
@@ -186,6 +191,7 @@ def inquiry(request):
         '''
         send_mail('Dr Disinfecto Customer Inquiry', message, request.POST.get('email'), [settings.EMAIL_HOST_USER])
         return redirect('product:index')
+
 
 def complaint(request):
     if request.method == 'POST':
