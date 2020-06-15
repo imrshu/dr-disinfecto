@@ -33,7 +33,7 @@
                       {% if form.errors %}
                       <p class="help is-danger">Email is invalid</p>
                       {% endif %}
-                    </div>    
+                    </div>
                   </div>
                   <div class="column is-5">
                     <div class="field">
@@ -44,11 +44,11 @@
                       {% if form.errors %}
                       <p class="help is-danger">Password is incorrect</p>
                       {% endif %}
-                    </div>    
+                    </div>
                   </div>
                   <div class="column is-2">
                     <div class="field">
-                      <label class="label">...</label>
+                      <label class="label">&nbsp;</label>
                       <div class="control">
                         <button type="submit" id="login-btn" class="button is-success"> Login </button>
                       </div>
@@ -57,8 +57,8 @@
                 </div>
               </form>
               <hr>
-              <p> Dont have an account, <a href="{% url 'product:signup' %}" class=""><b>Register here</b></a></p>
-              <p> Forgot password ? <a href="{% url 'password_reset' %}" class=""><b>Reset now</b></a></p>
+              <p> Dont have an account? <a href="{% url 'product:signup' %}"><b>Register here</b></a></p>
+              <p> Forgot password? <a href="{% url 'password_reset' %}"><b>Reset now</b></a></p>
             </div>
           </div>
         </div>

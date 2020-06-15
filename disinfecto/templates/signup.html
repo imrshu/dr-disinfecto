@@ -44,12 +44,12 @@
                   </div>
                 </div>
     
-                <div class="field">
+                <!-- <div class="field">
                   <label class="label">{{form.address.label}}</label>
                   <div class="control">
                     {{form.address}}
                   </div>
-                </div>
+                </div> -->
     
                 <div class="field">
                   <label class="label">{{form.email.label}}</label>
@@ -73,16 +73,15 @@
                 </div>
 
                 <div class="field">
-                  <label class="label">...</label>
+                  <label class="label">&nbsp;</label>
                   <div class="control">
                     <button type="submit" id="signup-btn" class="button is-success"> Sign Up </button>
                   </div>
                 </div>
-
                 <hr>
                 <div class="columns is-centered">
                   <div class="column is-6">
-                    <p> Alrady have an account, <a href="{% url 'product:login' %}" class=""><b>Login here</b></a></p>
+                    <p>Alrady have an account?<a href="{% url 'product:login' %}"><b>Login here</b></a></p>
                   </div>
                 </div>
 
