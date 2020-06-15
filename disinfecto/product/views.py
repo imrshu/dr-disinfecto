@@ -161,22 +161,20 @@ def getAllProducts(request):
         })
 
 
-# @login_required
-# def giveReview(request):
-#     if request.method == 'GET':
-#         print(request.user.first_name)
-#         print(request.user.email)
-#         return render(request, 'review.html', {
-#             'username': request.user.first_name
-#         })
-#     else:
-#         Review.objects.create(
-#             user=request.user,
-#             product_name=request.POST.get('product_name'),
-#             review_text=request.POST.get('review'),
-#             ratings=request.POST.get('rating')
-#         )
-#         return redirect('product:index')
+@login_required
+def giveReview(request):
+    if request.method == 'GET':
+        return render(request, 'review.html', {
+            'username': request.user.first_name
+        })
+    else:
+        Review.objects.create(
+            user=request.user,
+            product_name=request.POST.get('product_name'),
+            review_text=request.POST.get('review'),
+            ratings=request.POST.get('rating')
+        )
+        return redirect('product:home')
 
 
 def inquiry(request):
