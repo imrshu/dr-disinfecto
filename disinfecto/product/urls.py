@@ -16,6 +16,7 @@ urlpatterns = [
     path('signup', signup, name = 'signup'),
     path('logout', logout, {'next_page': '/'}, name = 'logout'),
     path('home', home, name = 'home'),
+    path('services', getServices, name = 'services'),
     path('payment', payment, name='payment'),
     # path('product/<product_id>/', productorder, name='productorder'),
     path('feedback', feedback, name='feedback'),

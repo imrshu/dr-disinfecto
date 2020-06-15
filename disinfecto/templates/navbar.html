@@ -42,7 +42,7 @@
             <span>Products</span>
          </a>
          {% endif %}
-         <a href="#/form" class="navbar-item" title="Disinfecto Services" style="color: ghostwhite;">
+         <a href="{% url 'product:services' %}" class="navbar-item {% active_link 'product:services' %}" title="Disinfecto Services" style="color: ghostwhite;">
             <span>Services</span>
          </a>
          <a href="https://www.mohfw.gov.in/" class="navbar-item" target="_blank" title="Disinfecto covid 19 updates" style="color: ghostwhite;">

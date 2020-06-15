@@ -45,6 +45,15 @@ class Product(models.Model):
         return self.name
 
 
+class Service(models.Model):
+    name = models.CharField(max_length=60)
+    image = models.ImageField()
+    price = models.FloatField()
+    
+    def __str__(self):
+        return self.name
+
+
 class Order(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)

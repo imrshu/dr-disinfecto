@@ -41,6 +41,15 @@ def home(request):
 
 
 @login_required
+def getServices(request):
+    if request.method == 'GET':
+        services = Service.objects.all()
+        return render(request, 'services.html', {
+            'services': services
+        })
+
+
+@login_required
 def payment(request):
     if request.method == 'POST':
         data = request.body.decode('utf-8')
@@ -211,14 +220,23 @@ def addtocart(request):
         data = request.body.decode('utf-8')
         data = literal_eval(data)
         product = Product.objects.get(id=data.get('id'))
-        total_price = product.price * data.get('quantity')
-        Cart.objects.create(
-            user=request.user,
-            product=product,
-            quantity=data.get('quantity'),
-            price=total_price
-        )
+        if data.get('quantity') != 0:
+            total_price = product.price * data.get('quantity')
+            Cart.objects.create(
+                user=request.user,
+                product=product,
+                quantity=data.get('quantity'),
+                price=total_price
+            )
+        else:
+            Cart.objects.create(
+                user=request.user,
+                product=product,
+                quantity=0,
+                price=total_price
+            )
         return HttpResponse("product added into cart")
+
     elif request.method == 'DELETE':
         Cart.objects.get(pk=request.GET.get('id'), user=request.user.pk).delete()
         return HttpResponse("product removed from cart")
