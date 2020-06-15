@@ -66,7 +66,8 @@
                       {% endfor %}
                   </div>
                   <div class="panel-block">
-                    <button class="button is-link is-outlined is-fullwidth">
+                    <button class="button is-link is-outlined is-fullwidth"
+                    onclick="checkout();">
                       Checkout
                     </button>
                   </div>
@@ -91,6 +92,33 @@
         })
         .then(success=> window.location.reload())
         .catch(err=> alert('Error occurred'));
+    };
+
+    const checkout = () => {
+      const paymenturl = "{% url 'product:payment' %}";
+
+      headers = {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrftoken
+      }
+
+      payload = {
+        'amount': parseFloat('{{ total_price }}')*100,
+        'currency': 'INR',
+        'payment_capture': 1
+      }
+
+      fetch(paymenturl, {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(payload)
+      })
+      .then(success=> {
+        success.json()
+        .then(resp=> window.location.href=`${paymenturl}?amount=${resp.amount}&id=${resp.order_id}`)
+        .catch(err=>alert('error occured'));
+      })
+      .catch(err=> console.log(err));
     };
 </script>
 

@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, HttpResponse
+from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.conf import settings
@@ -28,10 +29,41 @@ def signup(request):
     return render(request, 'signup.html', {'form': form})
 
 
+@login_required
 def home(request):
     if request.method == 'GET':
         products = Product.objects.all()
         return render(request, 'products.html', {'products':products})
+
+
+@login_required
+def payment(request):
+    if request.method == 'POST':
+        data = request.body.decode('utf-8')
+        # razorpay data payload
+        data = literal_eval(data)
+        # razorpay_payment_url
+        razorpay_payment_url = 'https://api.razorpay.com/v1/orders'
+        # razorpay headers
+        headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Basic cnpwX3Rlc3RfWk13MklkM3JsZExrbTA6UjdQaFRYaVdqb0o1WW9lc0FJNGRpUlJR'
+        }
+        response = requests.post(razorpay_payment_url,
+            json=data,
+            headers=headers
+        ).json()
+
+        return JsonResponse({
+            'amount': response.get('amount'),
+            'order_id': response.get('id')           
+        })
+    else:
+        return render(request, 'razorpay_form.html', {
+            'amount': request.GET.get('amount'),
+            'order_id': request.GET.get('id')
+        })
+
 
 
 @login_required
@@ -95,16 +127,12 @@ def success(request):
             ).hexdigest().upper()
             # verify the payment integrity
             if signature == razorpay_signature:
-                product = Product.objects.get(id=int(request.POST.get('product')))
-                Order.objects.create(
-                    user=request.user,
-                    product=product,
-                    quantity=request.POST.get('quantity'),
-                    total=request.POST.get('total'),
-                    razorpay_order_id=razorpay_order_id,
-                    order_success=True
-                )
-                product.qty = int(product.qty) - int(request.POST.get('quantity'))
+                items = Cart.objects.filter(user=request.user.pk)
+                for item in items:
+                    product = Product.objects.get(id=item.product.pk)
+                    product.qty = int(product.qty) - int(item.quantity)
+                    product.save()
+                items.delete()
                 return HttpResponse('Payment done Order placed successfully')
             else:
                 return HttpResponse('payment failed')
@@ -184,9 +212,10 @@ def addtocart(request):
             quantity=data.get('quantity'),
             price=total_price
         )
+        return HttpResponse("product added into cart")
     elif request.method == 'DELETE':
         Cart.objects.get(pk=request.GET.get('id'), user=request.user.pk).delete()
-    return HttpResponse("hi")
+        return HttpResponse("product removed from cart")
 
 
 @login_required

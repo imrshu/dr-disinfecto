@@ -1,36 +1,44 @@
 {% extends 'base.html' %}
+{% load static %}
 
 
 {% block body %}
 
-<div class="columns">
-    <div class="column is-12" style="text-align: center;">
-        <h1 class="title is-2">DR Disinfecto Payment Gateway</h1>
+<section class="hero is-info">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title">Dr Disinfecto</h1>
+        <h2 class="subtitle">
+            Payment Gateway
+        </h2>
+      </div>
     </div>
-</div>
+</section>
 
-<div class="card">
-    <div class="card-content">
-        <form action="{% url 'product:success' %}" method="POST">
-            {% csrf_token %}
-            <script src="https://checkout.razorpay.com/v1/checkout.js"
-            data-key="rzp_test_ZMw2Id3rldLkm0"
-            data-amount="{{amount}}"
-            data-currency="INR"
-            data-order_id="{{order_id}}"
-            data-buttontext="Pay with Razorpay"
-            data-name="Dr Disinfecto"
-            data-description="Payment for the product purchased {{name}}"
-            data-image="https://example.com/your_logo.jpg"
-            data-prefill.name="Gaurav Kumar"
-            data-prefill.email="gaurav.kumar@example.com"
-            data-prefill.contact="9999999999"
-            data-theme.color="#F37254">
-            </script>
-            <input type="hidden" custom="Hidden Element" name="product" value="{{product_id}}">
-            <input type="hidden" custom="Hidden Element" name="total" value="{{total}}">
-            <input type="hidden" custom="Hidden Element" name="quantity" value="{{quantity}}">
-        </form>    
+<section class="section">
+    <div class="container">
+        <div class="columns">
+            <div class="column is-6 box has-text-centered">
+                <form action="{% url 'product:success' %}" method="POST">
+                    {% csrf_token %}
+                    <script src="https://checkout.razorpay.com/v1/checkout.js"
+                    data-key="rzp_test_ZMw2Id3rldLkm0"
+                    data-amount="{{amount}}"
+                    data-currency="INR"
+                    data-order_id="{{order_id}}"
+                    data-buttontext="Pay with Razorpay"
+                    data-name="Dr Disinfecto"
+                    data-image="{% static 'images/Small logo.PNG' %}"
+                    data-theme.color="#F37254">
+                    </script>
+                </form>        
+            </div>
+            <div class="column is-6">
+                <a href="javascript: history.back();" class="button is-black">Back</a>
+            </div>
+        </div>
     </div>
-</div>
+</section>
+
+
 {% endblock %}
