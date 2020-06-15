@@ -12,7 +12,6 @@ class User(AbstractUser):
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)
     phone = models.CharField(max_length=10, null=True, blank=True)
-    address = models.TextField(null=True, blank=True)
 
     REQUIRED_FIELDS = []
     USERNAME_FIELD = 'email'

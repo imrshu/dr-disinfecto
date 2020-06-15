@@ -21,7 +21,7 @@
           <p class="subtitle">Register Now</p>
           <div class="box">
             <div>
-              <form action="{% url 'product:signup' %}" method="post">
+              <form action="{% url 'product:signup' %}" method="POST">
                 {% csrf_token %}
                 <div class="field">
                   <label class="label">{{form.first_name.label}}</label>
@@ -43,14 +43,7 @@
                     {{form.phone}}
                   </div>
                 </div>
-    
-                <!-- <div class="field">
-                  <label class="label">{{form.address.label}}</label>
-                  <div class="control">
-                    {{form.address}}
-                  </div>
-                </div> -->
-    
+        
                 <div class="field">
                   <label class="label">{{form.email.label}}</label>
                   <div class="control">
@@ -80,11 +73,10 @@
                 </div>
                 <hr>
                 <div class="columns is-centered">
-                  <div class="column is-6">
-                    <p>Alrady have an account?<a href="{% url 'product:login' %}"><b>Login here</b></a></p>
+                  <div class="column is-12 has-text-centered">
+                    <p>Already have an account? <a href="{% url 'product:login' %}"><b>Login here</b></a></p>
                   </div>
                 </div>
-
               </form>
             </div>
           </div>
