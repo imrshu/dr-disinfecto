@@ -31,6 +31,12 @@
                     <div class="message-body">
                         <form action="{% url 'product:success' %}" method="POST">
                             {% csrf_token %}
+                            <div class="field">
+                                <label class="label">Enter Your Address</label>
+                                <div class="control">
+                                    <textarea class="textarea" name="address" placeholder="Krishna Nagar" required></textarea>
+                                </div>
+                            </div>
                             <script src="https://checkout.razorpay.com/v1/checkout.js"
                             data-key="rzp_test_ZMw2Id3rldLkm0"
                             data-amount="{{amount}}"
@@ -41,7 +47,8 @@
                             data-image="{% static 'images/Small logo.PNG' %}"
                             data-theme.color="#294066">
                             </script>
-                        </form>        
+                            <input type="hidden" name="mobile" value="{{request.user.phone}}">
+                        </form>
                     </div>
                 </article>
             </div>

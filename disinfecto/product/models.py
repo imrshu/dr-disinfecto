@@ -56,7 +56,10 @@ class Service(models.Model):
 
 class Order(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    phone = models.CharField(max_length=10, null=True, blank=True)
+    address = models.TextField(null=True, blank=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True, blank=True)
+    service = models.ForeignKey(Service, on_delete=models.CASCADE, null=True, blank=True)
     quantity = models.IntegerField(default=1)
     total = models.CharField(max_length=20, null=True, blank=True)
     razorpay_order_id = models.CharField(max_length=60, null=True, blank=True)

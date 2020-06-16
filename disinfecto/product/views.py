@@ -9,6 +9,7 @@ from django.contrib.auth import login, authenticate
 from django.core.mail import send_mail
 from ast import literal_eval
 from django.db.models import Sum
+from .helpers import saveOrder, sendOrderEmail
 import requests
 import hmac
 import hashlib
@@ -123,6 +124,7 @@ def feedback(request):
         return redirect('home')
 
 
+@login_required
 def success(request):
     if request.method == 'POST':
         if 'error' in request.POST:
@@ -143,10 +145,43 @@ def success(request):
             if signature == razorpay_signature:
                 items = Cart.objects.filter(user=request.user.pk)
                 for item in items:
-                    product = Product.objects.get(id=item.product.pk)
-                    product.qty = int(product.qty) - int(item.quantity)
-                    product.save()
+                    if not item.service:
+                        product = Product.objects.get(id=item.product.pk)
+                        product.qty = int(product.qty) - int(item.quantity)
+                        product.save()
+                        payload = {
+                            'user': request.user,
+                            'phone': request.POST.get('mobile'),
+                            'address': request.POST.get('address'),
+                            'product': product,
+                            'quantity': item.quantity,
+                            'total': item.price,
+                            'razorpay_order_id': razorpay_order_id,
+                            'order_success': True
+                        }
+                        saveOrder(**payload)
+                    else:
+                        service = Service.objects.get(id=item.service.pk)
+                        payload = {
+                            'user': request.user,
+                            'phone': request.POST.get('mobile'),
+                            'address': request.POST.get('address'),
+                            'service': service,
+                            'quantity': 0,
+                            'total': item.price,
+                            'razorpay_order_id': razorpay_order_id,
+                            'order_success': True
+                        }
+                        saveOrder(**payload)
                 items.delete()
+                order_msg = f'''
+                    Dear Dr Disinfecto Team,\n
+                    Customer- {request.user.first_name}\n
+                    Phone number- {request.user.phone}\n
+
+                    Has Successfully placed an order
+                '''
+                sendOrderEmail(order_msg, request.user.email)
                 return HttpResponse('Payment done Order placed successfully')
             else:
                 return HttpResponse('payment failed')
