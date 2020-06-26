@@ -39,6 +39,7 @@ class Product(models.Model):
     colour = models.CharField(max_length=20, null=True, blank=True)
     price = models.FloatField()
     qty = models.IntegerField(null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
 
 
     def __str__(self):
