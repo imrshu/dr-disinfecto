@@ -60,9 +60,9 @@ def payment(request):
         razorpay_payment_url = 'https://api.razorpay.com/v1/orders'
         # razorpay headers
         headers = {
-            'Content-Type': 'application/json',
-            'Authorization': 'Basic cnpwX3Rlc3RfWk13MklkM3JsZExrbTA6UjdQaFRYaVdqb0o1WW9lc0FJNGRpUlJR'
-        }
+            'Content-Type': 'application/json', 
+            'Authorization': 'Basic cnpwX3Rlc3RfR0VqOW16NVY4NnFNNmY6MUxvazBsZXZHc2VYeGQ4N2czY0ZSWVNp'
+        }   
         response = requests.post(razorpay_payment_url,
             json=data,
             headers=headers
@@ -137,7 +137,7 @@ def success(request):
             # payment string
             payment_string = razorpay_order_id + '|' + razorpay_payment_id
             # generate the hashed string
-            signature = hmac.new(bytes('R7PhTXiWjoJ5YoesAI4diRRQ', 'latin-1'),
+            signature = hmac.new(bytes('1Lok0levGseXxd87g3cFRYSi', 'latin-1'),
             msg=bytes(payment_string, 'latin-1'),
             digestmod=hashlib.sha256
             ).hexdigest().upper()
