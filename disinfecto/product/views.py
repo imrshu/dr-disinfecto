@@ -254,7 +254,6 @@ def addtocart(request):
     if request.method == 'POST':
         data = request.body.decode('utf-8')
         data = literal_eval(data)
-        print(data)
         if data.get('product'):
             product = Product.objects.get(id=data.get('id'))
             total_price = product.price * data.get('quantity')
@@ -266,7 +265,6 @@ def addtocart(request):
             )
             return HttpResponse("product added into cart")
         else:
-            print("sada")
             service = Service.objects.get(id=data.get('id'))
             Cart.objects.create(
                 user=request.user,
