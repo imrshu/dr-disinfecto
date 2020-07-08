@@ -22,5 +22,8 @@ urlpatterns = [
     path('feedback', feedback, name='feedback'),
     path('success/', success, name='success'),
     path('cart', addtocart, name='addtocart'),
-    path('showcart', showcart, name='showcart')
+    path('showcart', showcart, name='showcart'),
+    path('refund_policy', refund_policy, name='refund_policy'),
+    path('terms_of_condition', terms_of_condition, name='terms_of_condition'),
+    path('privacy_policy', privacy_policy, name='privacy_policy'),
 ]

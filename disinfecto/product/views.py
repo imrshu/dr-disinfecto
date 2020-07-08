@@ -60,9 +60,9 @@ def payment(request):
         razorpay_payment_url = 'https://api.razorpay.com/v1/orders'
         # razorpay headers
         headers = {
-            'Content-Type': 'application/json', 
+            'Content-Type': 'application/json',
             'Authorization': 'Basic cnpwX3Rlc3RfR0VqOW16NVY4NnFNNmY6MUxvazBsZXZHc2VYeGQ4N2czY0ZSWVNp'
-        }   
+        }
         response = requests.post(razorpay_payment_url,
             json=data,
             headers=headers
@@ -289,3 +289,18 @@ def showcart(request):
             'items': items,
             'total_price': total_price
         })
+
+
+def refund_policy(request):
+    if request.method == 'GET':
+        return render(request, 'refund_policy.html')
+
+
+def terms_of_condition(request):
+    if request.method == 'GET':
+        return render(request, 'terms_of_condition.html')
+
+
+def privacy_policy(request):
+    if request.method == 'GET':
+        return render(request, 'privacy_policy.html')
